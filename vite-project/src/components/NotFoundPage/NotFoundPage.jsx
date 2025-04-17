@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 const NotFoundPage = ({error}) => {
     return (
         <>
@@ -5,6 +7,7 @@ const NotFoundPage = ({error}) => {
                Something went wrong
             </h2>
             <p>Error: {error}</p>
+            <Link to={'/'}>Home Page</Link>
         </>
     );
 };

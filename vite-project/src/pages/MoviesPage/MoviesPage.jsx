@@ -4,12 +4,13 @@ import MovieList from "../../components/MovieList/MovieList.jsx";
 import NotFoundPage from "../../components/NotFoundPage/NotFoundPage.jsx";
 import {useSearchParams} from "react-router-dom";
 import Loader from "../../components/Loader/Loader.jsx";
+import s from './MoviesPage.module.css'
 
 const MoviesPage = () => {
 
     const [filmsByQuery, setFilmsByQuery] = useState([])
     const [searchParams, setSearchParams] = useSearchParams()
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     const query = searchParams.get('query')
@@ -22,10 +23,11 @@ const MoviesPage = () => {
     useEffect(()=>{
         if(!query) return
 
-        setIsLoading(true)
+
 
         const getData = async() =>{
             try{
+                setIsLoading(true)
                 const {results} = await getFilmsByQuery(query)
 
                 setFilmsByQuery(results)
@@ -42,15 +44,15 @@ const MoviesPage = () => {
     }, [query])
 
     return (
-        <>
-        <form onSubmit={handleSubmit}>
-            <input/>
+        <div className={s.wrapper}>
+        <form className={s.form} onSubmit={handleSubmit}>
+            <input className={s.input}/>
             <button type='submit'>Search</button>
         </form>
             {isLoading && <Loader/>}
-            {filmsByQuery.length === 0 && query && !isLoading ?  <h2>We couldn't find anything</h2> : <MovieList movies={filmsByQuery}/>}
+            {filmsByQuery.length === 0 && query && !isLoading ?  <h2>We couldn't find anything with name: {query}</h2> : <MovieList movies={filmsByQuery}/>}
             {error && <NotFoundPage error={error}/>}
-            </>
+            </div>
     );
 };
 
