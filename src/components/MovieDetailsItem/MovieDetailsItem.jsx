@@ -1,4 +1,4 @@
-import s from "../MovieDetailsItem/MovieDetailsItem.module.css";
+import s from "./MovieDetailsItem.module.css";
 
 const MovieDetailsItem = ({movie}) => {
     const {poster_path, title, release_date,
