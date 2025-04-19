@@ -12,20 +12,21 @@ const MovieCast = () => {
     const [error, setError] = useState(false)
 
     useEffect(()=>{
-        try{
-            setIsLoading(true)
-            const getCastData = async() =>{
+
+        const getCastData = async() =>{
+            try{
+                setIsLoading(true)
                 const {cast} = await getCast(movieId)
                 setCast(cast.slice(0, 20))
-            }
-
-            getCastData()
-        }catch(error){
-            setError(error.message)
-        }finally{
-            setIsLoading(false)
+            }catch(error){
+                setError(error.message)
+            }finally{
+                setIsLoading(false)
+                }
         }
-    }, [])
+        getCastData()
+
+    }, [movieId])
     return (
         <>
             {cast.length === 0 && !isLoading ? <h2>We couldn't find anything</h2>: <MovieCastItem cast={cast}/>}

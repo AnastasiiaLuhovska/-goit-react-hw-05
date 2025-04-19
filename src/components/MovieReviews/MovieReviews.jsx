@@ -14,20 +14,19 @@ const MovieReviews = () => {
     const [error, setError] = useState(false)
 
     useEffect(()=>{
-        try{
-            setIsLoading(true)
-            const getReviewsdata = async() =>{
+        const getReviewsdata = async() => {
+            try {
+                setIsLoading(true)
                 const {results} = await getReviews(movieId)
                 setReviews(results)
+            } catch (error) {
+                setError(error.message)
+            } finally {
+                setIsLoading(false)
             }
-            getReviewsdata()
-
-        }catch(error){
-            setError(error.message)
-        }finally{
-            setIsLoading(false)
         }
-    }, [])
+            getReviewsdata()
+    }, [movieId])
 
 
     return (
